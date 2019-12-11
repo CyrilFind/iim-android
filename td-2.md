@@ -16,7 +16,7 @@ implementation "androidx.recyclerview:recyclerview:1.1.0"
 class TasksFragment : Fragment() {}
 ```
 - Créer le layout associé `fragment_tasks.xml`
-- Overrider `OnCreateView` pour créer la `view`:
+- Dans `TasksFragment`, overrider (surcharger) la méthode `onCreateView(...)` pour initialiser la `view` à l'aide de ce layout:
 
 ```kotlin
 inflater.inflate(R.layout.fragment_tasks, parent, false)
@@ -45,7 +45,7 @@ class TasksAdapter(private val tasks: List<String>) : RecyclerView.Adapter<TaskV
 ```kotlin
 inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 	fun bind(taskTitle: String) {
-	   // Afficher les données et relier les listeners
+	   // C'est ici qu'on reliera les données et les listeners une fois l'adapteur implémenté
 	}
 }
 ```
