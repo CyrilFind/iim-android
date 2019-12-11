@@ -2,24 +2,29 @@
 
 L'objectif de ce TD est d'implementer un écran affichant une liste de tâches, de permettre de créer des nouvelles tâches, de les supprimer et de les partager dans une autre application.
 
-#### Dependances RecyclerView
+## Dependances RecyclerView
 Dans le `build.gradle`, ajouter :
 
 ```groovy
 implementation "androidx.recyclerview:recyclerview:1.1.0"
 ```
 
-#### TasksFragment
+## TasksFragment
 - Créez `TasksFragment` qui va afficher la liste des tâches:
+
 ```kotlin
-class TasksFragment() : Fragment() {}
+class TasksFragment : Fragment() {}
 ```
 - Créer le layout associé `fragment_tasks.xml`
-- Overrider `OnCreateView` pour `inflate` ce layout
-- Grace à la balise `<fragment...>`, ajouter à votre activité principale le `TasksFragment `
-- Utilisez `android:name` pour specifier la classe de votre Fragment
+- Overrider `OnCreateView` pour créer la `view`:
 
-#### La liste des tâches
+```kotlin
+inflater.inflate(R.layout.item_task, parent, false)
+```
+- Ajouter une balise `<fragment...>` à votre activité principale
+- Utilisez `android:name` pour specifier la classe de votre Fragment (ex: `"com.cyrilfind.todo.TasksFragment"`)
+
+## La liste des tâches
 
 - Pour commencer, la liste des tâches sera simplement un tableau de `String`:
 
@@ -27,18 +32,7 @@ class TasksFragment() : Fragment() {}
 private val tasks = listOf("Task 1", "Task 2", "Task 3")
 ```
 
-- Dans le layout associé à `TasksFragment`, placez la balise `<RecyclerView...>`:
-
-```xml
-<androidx.recyclerview.widget.RecyclerView
-  android:id="@+id/tasks_recycler_view"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"/>
-```
-
-- Dans `TasksFragment`, overrider `onViewCreated` et y récupérer la `RecyclerView` du layout pour lui donner avec un `layoutManager` et un `adapter` (pour l'instant votre `TasksAdapter` ne va pas encore marcher)
-
-**Rappel**: l'Adapteur recycle les cellules (`ViewHolder`) en y insérant les données des tâches visibles lorsqu'on scroll
+- Dans le layout associé à `TasksFragment`, placez une balise `<androidx.recyclerview.widget.RecyclerView...>`:
 
 - Créer une nouvelle classe `TasksAdapter`
 
@@ -56,7 +50,12 @@ inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 ```
 
-- Créer le layout `item_task.xml` correspondant à un `TaskViewHolder`
+- Dans `TasksFragment`, overrider `onViewCreated` et y récupérer la `RecyclerView` du layout pour lui donner avec un `layoutManager` et un `adapter` (pour l'instant votre `TasksAdapter` ne va pas marcher)
+
+**Rappel**: l'Adapteur recycle les cellules (`ViewHolder`) en y insérant les données des tâches visibles lorsqu'on scroll
+
+
+- Créer le layout `item_task.xml` correspondant à une cellule (`TaskViewHolder`)
 
 ```xml
 <LinearLayout 
@@ -73,7 +72,7 @@ inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 </LinearLayout>
 ```
 
-#### Implémentation du RecyclerViewAdapter
+## Implémentation du RecyclerViewAdapter
 
 Dans le `TasksAdapter`, implémenter toutes les méthodes requises:
 
@@ -91,7 +90,7 @@ val viewHolder = TaskViewHolder(itemView)
 
 Votre code doit compiler maintenant et vous devez voir 3 tâches
 
-#### Ajout de la data class Task
+## Ajout de la data class Task
 
 - Dans un nouveau fichier, créer la `data class` `Task` avec 3 attributs: un id, un titre et une description. 
 - Ajouter une valeur par défaut à la description.
