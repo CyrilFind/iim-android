@@ -79,11 +79,10 @@ Dans le `TasksAdapter`, implémenter toutes les méthodes requises:
 **Astuce**: Utilisez l'IDE pour faciliter l'implémentation des méthodes en cliquant sur le nom de votre classe (qui doit être soulignée en rouge) et cliquez sur l'ampoule jaune ou tapez `Alt` + `ENTER` (sinon, `CTRL` + `O` n'importe où dans la classe)
 
 - `getItemCount` qui renvoie la taille de la liste de tâche à afficher
-- `onCreateViewHolder` qui crée un nouveau `TaskViewHolder` en utilisant le layout `item_task.xml`: 
+- `onCreateViewHolder` qui returne un nouveau `TaskViewHolder`: vous aurez besoin d'un `itemView`, généré à partir du layout `item_task.xml`: 
 
 ```kotlin
 val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
-val viewHolder = TaskViewHolder(itemView)
 ```
 
 - `onBindViewHolder` qui insère la donnée dans la cellule (`TaskViewHolder`) en fonction de la position dans la liste.
