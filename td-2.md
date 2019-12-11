@@ -16,7 +16,7 @@ implementation "androidx.recyclerview:recyclerview:1.1.0"
 class TasksFragment : Fragment() {}
 ```
 - Créer le layout associé `fragment_tasks.xml`
-- Dans `TasksFragment`, overrider (surcharger) la méthode `onCreateView(...)` pour initialiser la `view` à l'aide de ce layout:
+- Dans `TasksFragment`, overrider (surcharger) la méthode `onCreateView(...)` (commencez à taper ce nom de méthode et utilisez l'auto-completion de l'IDE pour vous aider) pour initialiser la `view` à l'aide de ce layout (c'est similaire au `onCreate` d'une Activity sauf qu'on doit retourner la `View` créée):
 
 ```kotlin
 inflater.inflate(R.layout.fragment_tasks, parent, false)
