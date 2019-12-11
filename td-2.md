@@ -12,7 +12,7 @@ implementation "androidx.recyclerview:recyclerview:1.1.0"
 #### TasksFragment
 - Créez `TasksFragment` qui va afficher la liste des tâches:
 ```kotlin
-class TasksFragment() : Fragment {}
+class TasksFragment() : Fragment() {}
 ```
 - Créer le layout associé `fragment_tasks.xml`
 - Overrider `OnCreateView` pour `inflate` ce layout
