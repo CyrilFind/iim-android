@@ -113,8 +113,8 @@ private val tasks = listOf(
 
 Dans le layout de votre ViewHolder, ajouter un bouton afin de pouvoir supprimer la tâche associée. Vous pouvez utiliser par exemple l'icone `@android:drawable/ic_menu_delete`
 
-- Transformer votre liste de taches `tasks` en `MutableList` afin de pouvoir la modifier 
-- Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une tache et ne renvoie rien: `(Task) -> Unit`
+- Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
+- Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une `Task` et ne renvoie rien: `(Task) -> Unit`
 - Relier cette callback au `onClickListener` de l'image que vous avez ajoutée précédemment
 - Dans le fragment, implementer le `onDeleteClickListener`, il doit supprimer la tache passée en argument de la liste **et notifier l'adapteur**.
 
