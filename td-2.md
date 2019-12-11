@@ -98,7 +98,7 @@ Votre code doit compiler maintenant et vous devez voir 3 tâches
 - Dans le `TasksFragment`, remplacer la liste `tasks` par
 
  ```kotlin       
-private val tasks = arrayOf(
+private val tasks = listOf(
 	Task(id = "id_1", title = "Task 1", description = "description 1"), 
 	Task(id = "id_2", title = "Task 2"), 
 	Task(id = "id_3", title = "Task 3")
