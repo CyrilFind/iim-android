@@ -2,21 +2,29 @@
 
 L'objectif de ce TD est d'implementer un écran affichant une liste de tâches, de permettre de créer des nouvelles tâches, de les supprimer et de les partager dans une autre application.
 
-#### Dependances RecyclerView
+## Dependances RecyclerView
 Dans le `build.gradle`, ajouter :
 
 ```groovy
 implementation "androidx.recyclerview:recyclerview:1.1.0"
 ```
 
-#### TasksFragment
-- Créez `TasksFragment` qui va afficher la liste des tâches (`File > New > Fragment (Blank)`)
-- Créer le layout associé `fragment_tasks.xml`
-- Overrider `OnCreateView` pour `inflate` ce layout
-- Grace à la balise `<fragment...>`, ajouter à votre activité principale le `TasksFragment `
-- Utilisez `android:name` pour specifier la classe de votre Fragment
+## TasksFragment
+- Créez `TasksFragment` qui va afficher la liste des tâches:
 
-#### La liste des tâches
+```kotlin
+class TasksFragment : Fragment() {}
+```
+- Créer le layout associé `fragment_tasks.xml`
+- Overrider `OnCreateView` pour créer la `view`:
+
+```kotlin
+inflater.inflate(R.layout.fragment_tasks, parent, false)
+```
+- Ajouter une balise `<fragment...>` à votre activité principale
+- Utilisez `android:name` pour specifier la classe de votre Fragment (ex: `"com.cyrilfind.todo.TasksFragment"`)
+
+## La liste des tâches
 
 - Pour commencer, la liste des tâches sera simplement un tableau de `String`:
 
@@ -24,18 +32,7 @@ implementation "androidx.recyclerview:recyclerview:1.1.0"
 private val tasks = listOf("Task 1", "Task 2", "Task 3")
 ```
 
-- Dans le layout associé à `TasksFragment`, placez la balise `<RecyclerView...>`:
-
-```xml
-<androidx.recyclerview.widget.RecyclerView
-  android:id="@+id/tasks_recycler_view"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"/>
-```
-
-- Dans `TasksFragment`, lors de l'appel de la fonction `onCreateView`, il faut initializer la `recyclerView` avec un `LinearLayoutManager` et un `adapter`
-
-**Rappel**: l'Adapteur recycle les cellules (`ViewHolder`) en y insérant les données des tâches visibles lorsqu'on scroll
+- Dans le layout associé à `TasksFragment`, placez une balise `<androidx.recyclerview.widget.RecyclerView...>`:
 
 - Créer une nouvelle classe `TasksAdapter`
 
@@ -53,7 +50,12 @@ inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 }
 ```
 
-- Créer le layout `item_task.xml` correspondant à un `TaskViewHolder`
+- Dans `TasksFragment`, overrider `onViewCreated` et y récupérer la `RecyclerView` du layout pour lui donner avec un `layoutManager` et un `adapter` (pour l'instant votre `TasksAdapter` ne va pas marcher)
+
+**Rappel**: l'Adapteur recycle les cellules (`ViewHolder`) en y insérant les données des tâches visibles lorsqu'on scroll
+
+
+- Créer le layout `item_task.xml` correspondant à une cellule (`TaskViewHolder`)
 
 ```xml
 <LinearLayout 
@@ -70,7 +72,7 @@ inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 </LinearLayout>
 ```
 
-#### Implémentation du RecyclerViewAdapter
+## Implémentation du RecyclerViewAdapter
 
 Dans le `TasksAdapter`, implémenter toutes les méthodes requises:
 
@@ -88,14 +90,14 @@ val viewHolder = TaskViewHolder(itemView)
 
 Votre code doit compiler maintenant et vous devez voir 3 tâches
 
-#### Ajout de la data class Task
+## Ajout de la data class Task
 
 - Dans un nouveau fichier, créer la `data class` `Task` avec 3 attributs: un id, un titre et une description. 
 - Ajouter une valeur par défaut à la description.
 - Dans le `TasksFragment`, remplacer la liste `tasks` par
 
  ```kotlin       
-private val tasks = arrayOf(
+private val tasks = listOf(
 	Task(id = "id_1", title = "Task 1", description = "description 1"), 
 	Task(id = "id_2", title = "Task 2"), 
 	Task(id = "id_3", title = "Task 3")
@@ -110,8 +112,8 @@ private val tasks = arrayOf(
 
 Dans le layout de votre ViewHolder, ajouter un bouton afin de pouvoir supprimer la tâche associée. Vous pouvez utiliser par exemple l'icone `@android:drawable/ic_menu_delete`
 
-- Transformer votre liste de taches `tasks` en `MutableList` afin de pouvoir la modifier 
-- Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une tache et ne renvoie rien: `(Task) -> Unit`
+- Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
+- Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une `Task` et ne renvoie rien: `(Task) -> Unit`
 - Relier cette callback au `onClickListener` de l'image que vous avez ajoutée précédemment
 - Dans le fragment, implementer le `onDeleteClickListener`, il doit supprimer la tache passée en argument de la liste **et notifier l'adapteur**.
 
