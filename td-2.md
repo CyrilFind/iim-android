@@ -36,7 +36,7 @@ private val tasks = listOf("Task 1", "Task 2", "Task 3")
   android:layout_height="match_parent"/>
 ```
 
-- Dans `TasksFragment`, lors de l'appel de la fonction `onCreateView`, il faut initializer la `recyclerView` avec un `LinearLayoutManager` et un `adapter`
+- Dans `TasksFragment`, overrider `onViewCreated` et y récupérer la `RecyclerView` du layout pour lui donner avec un `layoutManager` et un `adapter` (pour l'instant votre `TasksAdapter` ne va pas encore marcher)
 
 **Rappel**: l'Adapteur recycle les cellules (`ViewHolder`) en y insérant les données des tâches visibles lorsqu'on scroll
 
