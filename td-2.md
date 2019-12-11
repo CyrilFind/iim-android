@@ -19,7 +19,7 @@ class TasksFragment : Fragment() {}
 - Overrider `OnCreateView` pour créer la `view`:
 
 ```kotlin
-inflater.inflate(R.layout.item_task, parent, false)
+inflater.inflate(R.layout.fragment_tasks, parent, false)
 ```
 - Ajouter une balise `<fragment...>` à votre activité principale
 - Utilisez `android:name` pour specifier la classe de votre Fragment (ex: `"com.cyrilfind.todo.TasksFragment"`)
