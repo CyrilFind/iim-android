@@ -169,7 +169,7 @@ val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY) as Task
 ```
 
 - Faites en sorte que la nouvelle tache s'affiche à notre retour sur l'activité principale
-- Maintenant, récupérez les valeurs entrées dans les EditText pour les donner à la création de votre tâche (vous devrez faire un `toString()`)
+- Maintenant, récupérez les valeurs entrées dans les `EditText` pour les donner à la création de votre tâche (vous devrez faire un `toString()`)
 
 ## Édition d'une tâche
 
@@ -189,20 +189,13 @@ val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY) as Task
 
 Que se passe-t-il si vous tournez votre téléphone ? 🤔
 
-Pour régler ce problème, implémentez les méthodes suivantes:
+Pour sauvegarder votre liste de task, implémentez la méthodes suivante:
 
 ```kotlin
 override fun onSaveInstanceState(outState: Bundle)
-override fun onActivityCreated(savedInstanceState: Bundle?)
 ```
 
-Il faut également ajouter l'annotation `@Parcelize` à la classe `Task` afin qu'elle implémente`Parceleable` automatiquement 
-
-Pour cela il faut d'abord ajouter la dépendance suivante:
-
-```groovy
-implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
-```
+Puis, pour récupérer cette list, utilisez l'argument `savedInstanceState` de `onCreateView`
 
 
 [1]: https://developer.android.com/training/sharing/receive
