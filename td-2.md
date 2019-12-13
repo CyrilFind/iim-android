@@ -117,8 +117,8 @@ private val tasks = listOf(
 - Utilisez `.setOnClickListener {}` sur le FAB pour ajouter une tâche à votre liste:
 
 ```kotlin
-// Instanciation d'un objet task:
-Task(id = "id_#${task.size}", title = "task #${task.size}")
+// Instanciation d'un objet task avec des données préremplies:
+Task(id = "id_#${tasks.size + 1}", title = "task #${tasks.size + 1}")
 ```
 
 - Dans cette callback, **notifier l'adapteur** (aidez vous des suggestions de l'IDE) pour que votre modification s'affiche
