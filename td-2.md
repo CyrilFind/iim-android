@@ -173,10 +173,10 @@ val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY) as Task
 
 ## Édition d'une tâche
 
-- Ajouter une bouton permettant d'éditer
-- Au lieu de supprimer la tache, ouvrir l'activité `TaskActivity` pré-remplie avec les informations de la tâche.
-- Pour transmettre des infos d'une activité à l'autre, vous pouvez utiliser la méthode `putExtra` depuis une instance d'`Intent`
-- Vous pouvez ensuite récuperer dans le onCreate de l'activité les infos que vous avez passées
+- Ajouter une bouton permettant d'éditer en ouvrant l'activité `TaskActivity` pré-remplie avec les informations de la tâche
+- Pour transmettre des infos d'une activité à l'autre, vous pouvez utiliser la méthode `putExtra` depuis une instance d'`intent`
+- Inspirez vous de l'implémentation du bouton supprimer et du bouton ajouter
+- Vous pouvez ensuite récuperer dans le `onCreate` de l'activité les infos que vous avez passées
 - Vérifier que les infos éditées s'affichent bien à notre retour sur l'activité principale.
 
 ## Partager
