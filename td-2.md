@@ -153,17 +153,23 @@ onDeleteClickListener.invoke(task)
 val intent = Intent(this, TaskActivity::class.java)
 startActivityForResult(intent, ADD_TASK_REQUEST_CODE)
 ```
-- Faire en sorte que la `data class Task` hérite de `Serializable` pour pouvoir utiliser `putExtra(...)` et `getSerializableExtra(...)`
-- Dans la nouvelle activité, récupérer le bouton de validation puis setter son `onClickListener` pour qu'il crée une `Task(...)` (comme avant) 
-- Passer cette task dans l'intent
-- Overrider `onActivityResult`dans le `TaskFragment` pour récupérer cette task et l'ajouter à la liste:
+
+- Dans le `onCreate` de la nouvelle activité, récupérer le bouton de validation puis setter son `onClickListener` pour qu'il crée une tâche:
+
+```kotlin
+Task(id = UUID.randomUUID().toString(), title = "New Task !")
+```
+
+- Faire en sorte que la `data class Task` hérite de `Serializable` pour pouvoir passer des objets `Task` dans les `intent`
+- Passer cette task dans l'intent avec `putExtra(...)`
+- Overrider `onActivityResult`dans le `TaskFragment` pour récupérer cette task et l'ajouter à la liste
 
 ```kotlin
 val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY) as Task 
 ```
-- 
 
 - Faites en sorte que la nouvelle tache s'affiche à notre retour sur l'activité principale
+- Maintenant, récupérez les valeurs entrées dans les EditText pour les donner à la création de votre tâche (vous devrez faire un `toString()`)
 
 ## Édition d'une tâche
 
@@ -179,7 +185,7 @@ val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY) as Task
 - Ajouter la possibilité de partager du texte **vers** les autres applications avec un `OnLongClickListener` sur les tâches ([Documentation][2])
 
 
-## Bonus: Changements de configuration
+## Changements de configuration
 
 Que se passe-t-il si vous tournez votre téléphone ? 🤔
 
