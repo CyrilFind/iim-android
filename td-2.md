@@ -114,7 +114,7 @@ private val tasks = listOf(
 - Dans le `onClickListener` du FAB, ajoutez la possibilité de créer une `Task` rapidement: 
 
 ```kotlin
-Task(id = task.count, title = "task #${task.count}")
+Task(id = "id_#${task.size}", title = "task #${task.size}")
 ```
 
 
