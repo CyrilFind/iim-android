@@ -114,6 +114,7 @@ private val tasks = listOf(
 - Ouvrez le volet "Resource Manager" à gauche, cliquez sur le "+" en haut à gauche puis double cliquez sur le clipart du logo android et selectionnez une icone + (en cherchant "add" dans la barre de recherche) pour ajouter une icone à vos resource
 - Ajouter un Floating Action Button (FAB) en bas à droite de ce layout et utilisez l'icone créée 
 - Donnez des contraintes en bas et à droite de ce bouton
+- Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
 - Utilisez `.setOnClickListener {}` sur le FAB pour ajouter une tâche à votre liste:
 
 ```kotlin
@@ -128,7 +129,6 @@ Task(id = "id_#${tasks.size + 1}", title = "task #${tasks.size + 1}")
 
 Dans le layout de votre ViewHolder, ajouter un `ImageButton` qui servira à supprimer la tâche associée. Vous pouvez utiliser par exemple l'icone `@android:drawable/ic_menu_delete`
 
-- Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
 - Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une `Task` et ne renvoie rien: `(Task) -> Unit`
 
 ```kotlin
