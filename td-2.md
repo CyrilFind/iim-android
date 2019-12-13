@@ -87,7 +87,7 @@ val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_task, p
 
 - `onBindViewHolder` qui insère la donnée dans la cellule (`TaskViewHolder`) en fonction de la position dans la liste.
 
-Votre code doit compiler maintenant et vous devez voir 3 tâches
+- Lancez l'app: vous devez voir 3 tâches s'afficher 👏
 
 ## Ajout de la data class Task
 
@@ -107,18 +107,10 @@ private val tasks = listOf(
 - Enfin afficher la description en dessous du titre
 - Admirez avec fierté le travail accompli 🤩
 
-## Suppression d'une tache
-
-Dans le layout de votre ViewHolder, ajouter un bouton afin de pouvoir supprimer la tâche associée. Vous pouvez utiliser par exemple l'icone `@android:drawable/ic_menu_delete`
-
-- Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
-- Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une `Task` et ne renvoie rien: `(Task) -> Unit`
-- Relier cette callback au `onClickListener` de l'image que vous avez ajoutée précédemment
-- Dans le fragment, implementer le `onDeleteClickListener`, il doit supprimer la tache passée en argument de la liste **et notifier l'adapteur**.
 
 ## Création d'une nouvelle tache
 
-- Ajouter un Floating Action Button (FAB) dans le layout de l'activité principale
+- Ajouter un Floating Action Button (FAB) dans le layout du fragment
 - Dans le `onClickListener` du FAB, ajoutez la possibilité de créer une `Task` rapidement: 
 
 ```kotlin
@@ -126,24 +118,24 @@ Task(id = task.count, title = "task #${task.count}")
 ```
 
 
-#### Étape Bonus: Changements de configuration
+## Suppression d'une tache
 
-Que se passe-t-il si vous tournez votre téléphone ? 🤔
+Dans le layout de votre ViewHolder, ajouter un `ImageButton` qui servira à supprimer la tâche associée. Vous pouvez utiliser par exemple l'icone `@android:drawable/ic_menu_delete`
 
-Pour régler ce problème, implémentez les méthodes suivantes:
+- Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
+- Dans l'adapteur, ajouter une lambda `onDeleteClickListener` qui prends en arguments une `Task` et ne renvoie rien: `(Task) -> Unit`
 
 ```kotlin
-override fun onSaveInstanceState(outState: Bundle)
-override fun onActivityCreated(savedInstanceState: Bundle?)
+// Déclaration d'une lambda comme variable:
+var onDeleteClickListener: (Task) -> Unit = { task -> /* faire qqchose */ }
+
+// Utilisastion d'une lambda:
+onDeleteClickListener.invoke(task)
 ```
+- Utilisez cette lambda avec le bouton que vous avez ajouté précédemment avec `setOnClickListener {}`
+- Dans le fragment, accéder au `onDeleteClickListener` depuis l'adapter et implémentez là: donnez lui comme valeur une lambda qui va supprimer la tache passée en argument de la liste 
+- Dans cette implémentation, **notifier l'adapteur** (aidez vous des suggestions de l'IDE)
 
-Il faut également ajouter l'annotation `@Parcelize` à la classe `Task` afin qu'elle implémente`Parceleable` automatiquement 
-
-Pour cela il faut d'abord ajouter la dépendance suivante:
-
-```groovy
-implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
-```
 
 ## Ajout Complet
 
@@ -172,6 +164,27 @@ startActivity(intent)
 
 - Ajouter la possibilité de partager du texte **depuis** les autres applications et ouvrir le formulaire de création de tâche pré-rempli ([Documentation][1])
 - Ajouter la possibilité de partager du texte **vers** les autres applications avec un `OnLongClickListener` sur les tâches ([Documentation][2])
+
+
+## Bonus: Changements de configuration
+
+Que se passe-t-il si vous tournez votre téléphone ? 🤔
+
+Pour régler ce problème, implémentez les méthodes suivantes:
+
+```kotlin
+override fun onSaveInstanceState(outState: Bundle)
+override fun onActivityCreated(savedInstanceState: Bundle?)
+```
+
+Il faut également ajouter l'annotation `@Parcelize` à la classe `Task` afin qu'elle implémente`Parceleable` automatiquement 
+
+Pour cela il faut d'abord ajouter la dépendance suivante:
+
+```groovy
+implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+```
+
 
 [1]: https://developer.android.com/training/sharing/receive
 
