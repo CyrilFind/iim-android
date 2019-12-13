@@ -111,7 +111,8 @@ private val tasks = listOf(
 ## Ajout de tâche simple
 
 - Changez la root view de `fragment_tasks.xml` en ConstraintLayout en faisant un clic droit dessus en mode design (si ce n'est pas déjà le cas)
-- Ouvrez le volet "Resource Manager" à gauche, cliquez sur le "+" en haut à gauche puis double cliquez sur le clipart du logo android et selectionnez une icone + (en cherchant "add" dans la barre de recherche) pour ajouter une icone à vos resource
+- Ouvrez le volet "Resource Manager" à gauche, cliquez sur le "+" en haut à gauche puis "Vector Drawable" puis double cliquez sur le clipart du logo android et selectionnez une icone + (en cherchant "add" dans la barre de recherche) puis "finish" pour ajouter une icone à vos resource
+- Par défaut l'icône est noire mais vous pouvez utiliser l'attribut `android:tint` du bouton pour la rendre blanche (tapez "white" et laissez l'IDE compléter)
 - Ajouter un Floating Action Button (FAB) en bas à droite de ce layout et utilisez l'icone créée 
 - Donnez des contraintes en bas et à droite de ce bouton
 - Transformer votre liste de taches `tasks` en `mutableListOf(...)` afin de pouvoir la modifier 
