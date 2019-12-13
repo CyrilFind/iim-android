@@ -108,14 +108,20 @@ private val tasks = listOf(
 - Admirez avec fierté le travail accompli 🤩
 
 
-## Création d'une nouvelle tache
+## Ajout de tâche simple
 
-- Ajouter un Floating Action Button (FAB) dans le layout du fragment
-- Dans le `onClickListener` du FAB, ajoutez la possibilité de créer une `Task` rapidement: 
+- Changez la root view de `fragment_tasks.xml` en ConstraintLayout en faisant un clic droit dessus en mode design (si ce n'est pas déjà le cas)
+- Ouvrez le volet "Resource Manager" à gauche, cliquez sur le "+" en haut à gauche puis double cliquez sur le clipart du logo android et selectionnez une icone + (en cherchant "add" dans la barre de recherche) pour ajouter une icone à vos resource
+- Ajouter un Floating Action Button (FAB) en bas à droite de ce layout et utilisez l'icone créée 
+- Donnez des contraintes en bas et à droite de ce bouton
+- Utilisez `.setOnClickListener {}` sur le FAB pour ajouter une tâche à votre liste:
 
 ```kotlin
+// Instanciation d'un objet task:
 Task(id = "id_#${task.size}", title = "task #${task.size}")
 ```
+
+- Dans cette callback, **notifier l'adapteur** (aidez vous des suggestions de l'IDE) pour que votre modification s'affiche
 
 
 ## Suppression d'une tache
@@ -129,15 +135,15 @@ Dans le layout de votre ViewHolder, ajouter un `ImageButton` qui servira à supp
 // Déclaration d'une lambda comme variable:
 var onDeleteClickListener: (Task) -> Unit = { task -> /* faire qqchose */ }
 
-// Utilisastion d'une lambda:
+// Utilisation d'une lambda:
 onDeleteClickListener.invoke(task)
 ```
-- Utilisez cette lambda avec le bouton que vous avez ajouté précédemment avec `setOnClickListener {}`
+
+- Utilisez cette lambda avec dans le `onClickListener` du bouton supprimer
 - Dans le fragment, accéder au `onDeleteClickListener` depuis l'adapter et implémentez là: donnez lui comme valeur une lambda qui va supprimer la tache passée en argument de la liste 
-- Dans cette implémentation, **notifier l'adapteur** (aidez vous des suggestions de l'IDE)
 
 
-## Ajout Complet
+## Ajout de tâche complet
 
 - Créer la nouvelle `TaskActivity`, n'oubliez pas de la déclarer dans le manifest
 - Créer un layout contenant 2 `EditText`, pour le titre et la description et un bouton pour valider
@@ -152,7 +158,7 @@ startActivity(intent)
 - Lorsqu'on clique sur le bouton "Back", la `TaskActivity` doit se fermer: ajouter une popup de confirmation si l'utilisateur a commencer à taper des informations
 - Faites en sorte que la nouvelle tache s'affiche à notre retour sur l'activité principale.
 
-## Édition d'une tache
+## Édition d'une tâche
 
 - Ajouter une bouton permettant d'éditer
 - Au lieu de supprimer la tache, ouvrir l'activité `TaskActivity` pré-remplie avec les informations de la tâche.
