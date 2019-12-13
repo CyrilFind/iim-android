@@ -147,16 +147,23 @@ onDeleteClickListener.invoke(task)
 
 - Créer la nouvelle `TaskActivity`, n'oubliez pas de la déclarer dans le manifest
 - Créer un layout contenant 2 `EditText`, pour le titre et la description et un bouton pour valider
-- Changer l'action du FAB pour qu'il ouvre cette activité avec un `Intent`:
-
+- Définir un `ADD_TASK_REQUEST_CODE` et changer l'action du FAB pour qu'il ouvre cette activité avec un `Intent`, en attendant un resultat:
+ 
 ```kotlin
 val intent = Intent(this, TaskActivity::class.java)
-startActivity(intent)
+startActivityForResult(intent, ADD_TASK_REQUEST_CODE)
 ```
-- Lorsqu'on valide le formulaire, cela ajoute dans une nouvelle tache dans la liste et ferme l'activity
-- N'oubliez pas de donner un `id` à votre tache avant de l'ajouter !
-- Lorsqu'on clique sur le bouton "Back", la `TaskActivity` doit se fermer: ajouter une popup de confirmation si l'utilisateur a commencer à taper des informations
-- Faites en sorte que la nouvelle tache s'affiche à notre retour sur l'activité principale.
+- Faire en sorte que la `data class Task` hérite de `Serializable` pour pouvoir utiliser `putExtra(...)` et `getSerializableExtra(...)`
+- Dans la nouvelle activité, récupérer le bouton de validation puis setter son `onClickListener` pour qu'il crée une `Task(...)` (comme avant) 
+- Passer cette task dans l'intent
+- Overrider `onActivityResult`dans le `TaskFragment` pour récupérer cette task et l'ajouter à la liste:
+
+```kotlin
+val task = data!!.getSerializableExtra(TaskActivity.TASK_KEY) as Task 
+```
+- 
+
+- Faites en sorte que la nouvelle tache s'affiche à notre retour sur l'activité principale
 
 ## Édition d'une tâche
 
