@@ -14,7 +14,8 @@
 
 - TD 1: Kotlin Koans & Codelabs
 - TD 2: RecyclerView
-- TD 3: Internet
+- TD 3: Actions & Intents
+- TD 4: Internet
 - ...
 
 ## Évaluation
@@ -24,6 +25,8 @@ L'évaluation se fera sur un rendu de projet par groupe de 2 sous la forme d'une
 Délai: une semaine après la fin du cours
 
 Fonctionnalités demandées: Celles des TD + qq petites en autonomie à définir
+
+Comme il faut 2 notes, je ferai peut être une évaluation écrite individuelle le dernier jour 
 
 ### Barême indicatif
 
