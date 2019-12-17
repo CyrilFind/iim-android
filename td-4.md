@@ -53,7 +53,7 @@ Dans le fichier `app/build.gradle`, ajouter :
 ```kotlin
 object Api {
   private const val BASE_URL = "https://android-tasks-api.herokuapp.com/api/"
-  private const val TOKEN = "AJOUTEZ VOTRE TOKEN ICI !"
+  private const val TOKEN = "COPIEZ VOTRE TOKEN ICI !"
 }
 ```
 
@@ -222,21 +222,20 @@ class TasksRepository {
 ## LiveData
 
 - Dans `TasksFragment`, ajouter une instance de `TasksRepository` 
-- Modifier votre code pour l'utiliser
+- Dans `Api`, passer `taskService` et `userService` en `private`
+- Modifier votre code en conséquence: dans `onResume()`, "abonnez" le fragment àla réponse du repository et mettez à jour la liste et l'`adapter` avec le résultat (importer le `Observer` de la lib `lifecycle`):
+
 
 ```kotlin
 private val tasksRepository = TasksRepository()
 private val tasks = mutableListOf<Task>()
-```
 
-Dans `onCreate`, "abonnez" le fragment aux modifications des tâches et mettez à jour la liste et l'`adapter` avec le résultat:
-
-```kotlin
+// Dans onResume()
 tasksRepository.getTasks().observe(this, Observer {
 	if (it != null) {
 	  tasks.clear()
 	  tasks.addAll(it)
-	  tasksAdapter.notifyDataSetChanged()
+	  adapter.notifyDataSetChanged()
 	}
 })
 ```
