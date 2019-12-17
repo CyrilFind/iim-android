@@ -146,7 +146,7 @@ data class UserInfo(
 ### Affichage
 
 - Dans `fragment_tasks.xml`, ajoutez une `TextView` au dessus de la liste de tâche si vous n'en avez pas
-- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur, une erreur va s'afficher mais ne paniquez pas, on la résoud au point suivant:
+- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur, une erreur va s'afficher mais ne paniquez pas, on va s'en occuper:
 
 ```kotlin
 val userInfo = Api.userService.getInfo().body()
@@ -156,24 +156,25 @@ val userInfo = Api.userService.getInfo().body()
 Pour cela on peut utiliser `GlobalScope`, mais une meilleure façon est d'en créer un "vrai" pour pouvoir le `cancel()` après:
 
 ```kotlin
-// Pour créer:
+// Création:
 private val coroutineScope = MainScope()
-// Pour utiliser:
+// Utilisation:
 coroutineScope.launch {...}
-// Dans onDestroy():
+// Suppression dans onDestroy():
 coroutineScope.cancel()
 ```
-
-Vous pouvez aussi utiliser `lifeCycleScope` en ayant ajouté `implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"` 
-
-**NB:** Une vraiment bonne façon est d'utiliser les scopes fournis par android, notamment: `viewModelScope`, mais pour l'instant on implémente tout dans les fragments comme des 🐷
 
 - Afficher les données dans votre `TextView`
 
 ```kotlin
     my_text_view.text = "${userInfo.firstName} ${userInfo.lastName}"
 ```
+
 - Lancez l'app et vérifiez que vos infos s'affichent ! 
+
+#### Remarques:
+- Si vous utilisez `lifeCycleScope` (en ayant ajouté `implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"`) vous n'avaez pas besoin de faire la création et la suppression
+-  Un autre scope est fourni par android: `viewModelScope`, mais pour l'instant on implémente tout dans les fragments comme des 🐷
 
 ## TasksFragment
 
@@ -243,26 +244,32 @@ tasksRepository.getTasks().observe(this, Observer {
 Modifier `TasksService` et ajoutez y les routes suivantes:
 
 ```kotlin
-@GET("tasks")
-suspend fun getTasks(): Response<List<Task>>
-
 @DELETE("tasks/{id}")
-suspend fun deleteTask(@Path("id") id: String): Response<String>
+suspend fun deleteTask(@Path("id") id: String): Response<Boolean>
 
 @POST("tasks")
 suspend fun createTask(@Body task: Task): Response<Task>
 
 @PATCH("tasks/{id}")
-suspend fun updateTask(@Body task: Task): Response<Task>
+suspend fun updateTask(@Body task: Task, @Path("id") id: String = task.id): Response<Task>
 ```
 
-## Suppression, Ajout et Édition d'une tâche
+## Suppression d'une tâche
 
 **Remarque:** Vous pouvez créer des tâches dans l'interface web, en spécifiant votre token avec le bouton "Authorize" en haut
 
-- Modifier l'action lorsqu'on clique sur le bouton de suppression et effectuer un call réseau afin de la supprimer dans le serveur puis supprimer la dans la liste locale `tasks`
+- Inspirez vous du chargement de la liste pour ajouter les methodes permettant la suppression dans `TasksRepository` 
+- Dans `onDeleteClickListener`utilisez le repository pour supprimer dans le serveur et observez le résultat avant de supprimer dans la liste locale:
 
-- Avant de fermer l'Activity qui permet de créer/editer des tâches, effectuer un call réseau et vérifier qu'il n'y a pas d'erreurs avant de la fermer et de réafficher l'écran des tâches
+```kotlin
+adapter.onDeleteClickListener = { task ->
+    tasksRepository.deleteTasks().observe(this, Observer { success -> 
+        if (success) {
+            // faire comme avant
+        }
+    })
+}
+```
 
 ## TasksViewModel
 
@@ -307,3 +314,6 @@ class TasksRepository {
   }
 }
 ```
+
+- Vérifier que tout fonctionne
+- Permettre l'ajout et l'édition des tasks du serveur
