@@ -101,8 +101,6 @@ Glide.with(this).load("https://goo.gl/gEgYUd").into(image_view)
 
 - À partir de la [documentation de Glide](https://github.com/bumptech/glide), afficher l'image sous la forme d'un cercle
 
-## Caméra
-
 ### Nouvelle activité
 - Créer une nouvelle activité `UserInfoActivity` et ajoutez la dans le manifest
 - Remplir son layout:
@@ -113,12 +111,13 @@ Glide.with(this).load("https://goo.gl/gEgYUd").into(image_view)
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+        
     <Button
         android:id="@+id/upload_image_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choisir une Image" />
-
+        
     <Button
         android:id="@+id/take_picture_button"
         android:layout_width="match_parent"
@@ -128,7 +127,7 @@ Glide.with(this).load("https://goo.gl/gEgYUd").into(image_view)
 
 ```
 
-### Permission
+## Demander la Permission
 
 - `AndroidManifest`: ajouter la permission `android.permission.CAMERA`
 - `UserInfoActivity` : sur le `take_picture_button`, ajouter un onClickListener qui appele la méthode `askCameraPermissionAndOpenCamera`
@@ -182,7 +181,7 @@ Toast.makeText(this, "Si vous refusez, on peux pas prendre de photo ! 😢", Toa
 ```
 
 
-### Ouvrir la camera
+## Ouvrir l'appareil photo
 
 - Il est possible d'ouvrir des `Intent` et de récuperer des informations grâce à la fonction `startActivityForResult` qui est jumelée à la fonction `onActivityResult`
 
@@ -234,7 +233,8 @@ private fun imageToBody(image: Bitmap?): MultipartBody.Part? {
 - Ajouter une imageView dans la `UserInfoActivity`
 - Dans la fonction `handlePhotoTaken`, afficher la photo à l'aide de Glide
 
-### Upload
+## Uploader l'image capturée
+
 - Dans l'interface `UserService`, ajouter une nouvelle fonction
 
 ```kotlin
@@ -248,11 +248,9 @@ suspend fun updateAvatar(@Part avatar: MultipartBody.Part): Response<UserInfo>
 - Enfin au chargement de l'activité, afficher l'avatar renvoyé depuis le serveur
 
 
-## Accès au Storage
+## Uploader une image stockée
 - Ajouter dans le manifest la permission `android.permission.READ_EXTERNAL_STORAGE`
 - Permettez à l'utilisateur d'uploader une image qu'il avait déjà sur son téléphone
-
-
 
 ## Édition infos utilisateurs
 - Comme pour tasks, refactorisez en utilisant un `UserInfoViewModel` et un `UserInfoRepository`
