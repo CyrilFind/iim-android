@@ -6,17 +6,16 @@ Les APIs qui nous allons utiliser exigent qu'une personne soit connectée, dans 
 
 - Nous allons utiliser ce site: https://android-tasks-api.herokuapp.com/api-docs/index.html
 - Lisez rapidement la documentation de l'API: elle permet d'utiliser ses routes directement
-- Créez vous donc un compte en remplaçant le JSON donné par celui ci: (celui qui est donné est incomplet 🤷‍♂️):
+- Cliquez sur `users/sign_up` puis sur "Try it out"
+- Vous devriez voir un JSON prérempli dont vous pouvez remplacer les données avant de cliquer sur "Execute":
 
 ```json
 {
-  "user": {
     "firstname": "UN PRENOM",
     "lastname": "UN NOM",
     "email": "UN EMAIL",
     "password": "UN MDP",
     "password_confirmation": "LE MEME MDP"
-  }
 }
 ```
 
@@ -24,7 +23,7 @@ Les APIs qui nous allons utiliser exigent qu'une personne soit connectée, dans 
 
 ## Accèder à l'internet
 
-Afin de communiquer avec le réseau internet (wifi, ethernet ou mobile), il faut ajouter la permission dans le fichier `AndroidManifest`
+Afin de communiquer avec le réseau internet (wifi, ethernet ou mobile), il faut ajouter la permission dans le fichier `AndroidManifest`, juste après la balise `<manifest...>`
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
