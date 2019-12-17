@@ -145,10 +145,10 @@ data class UserInfo(
 ### Affichage
 
 - Dans `fragment_tasks.xml`, ajoutez une `TextView` au dessus de la liste de tâche si vous n'en avez pas
-- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur et les afficher dans votre `TextView`
+- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur
 
 ```kotlin
-val userInfo = Api.userService.getInfo()
+val userInfo = Api.userService.getInfo().body()
 ```
 
 - La méthode `getInfo()` étant déclarée comme `suspend`, vous aurez besoin de la lancer dans un `couroutineScope`.
@@ -167,6 +167,13 @@ Vous pouvez aussi utiliser `lifeCycleScope` en ayant ajouté `implementation "an
 
 **NB:** Une vraiment bonne façon est d'utiliser les scopes fournis par android, notamment: `viewModelScope`, mais pour l'instant on implémente tout dans les fragments comme des 🐷
 
+- Afficher les données dans votre `TextView`
+
+```kotlin
+    my_text_view.text = "${userInfo.firstName} ${userInfo.lastName}"
+```
+- Lancez l'app et vérifiez que vos infos s'affichent ! 
+
 ## TasksFragment
 
 Il est temps de récuperer les tâches depuis le serveur !
@@ -182,7 +189,7 @@ interface TasksService {
 
 - Utiliser l'instance de retrofit comme précédemment pour créer une instance de `TaskService` dans l'objet `Api`
 
-- Modifier `Task` pour la rendre Moshi-compatible
+- Modifier `Task` pour la rendre lisible par Moshi (i.e. faire comme pour `UserInfo`)
 
 ## TasksRepository
 
