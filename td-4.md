@@ -143,7 +143,7 @@ data class UserInfo(
 
 ### Affichage
 
-- Ajoutez une `TextView` au dessus de la liste de tâche si vous n'en avez pas
+- Dans `TasksFragment`, ajoutez une `TextView` au dessus de la liste de tâche si vous n'en avez pas
 - Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur et les afficher dans votre `TextView`
 
 ```kotlin
