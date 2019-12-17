@@ -40,6 +40,7 @@ Dans le fichier `app/build.gradle`, ajouter :
   implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
+  implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"
 ```
 
 ## Retrofit
@@ -97,7 +98,7 @@ object Api {
 
 ### UserService
 
-- Créez l'interface `UserService` pour requêter les infos de l'utilisateur:
+- Créez l'interface `UserService` pour requêter les infos de l'utilisateur (importez `Response` avec <kbd>alt + enter</kbd> et choisissez la version `retrofit`):
 
 ```kotlin
 interface UserService {
@@ -106,7 +107,7 @@ interface UserService {
 }
 ```
 
-- Utilisez retrofit pour créer une implémentation de ce service (gràce aux annotations):
+- Utilisez retrofit pour créer une implémentation de ce service (grace aux annotations):
 
 ```kotlin
 object Api {
@@ -161,6 +162,8 @@ coroutineScope.launch {...}
 // Dans onDestroy():
 coroutineScope.cancel()
 ```
+
+Vous pouvez aussi utiliser `lifeCycleScope` en ayant ajouté `implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"` 
 
 **NB:** Une vraiment bonne façon est d'utiliser les scopes fournis par android, notamment: `viewModelScope`, mais pour l'instant on implémente tout dans les fragments comme des 🐷
 
