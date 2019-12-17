@@ -221,8 +221,7 @@ class TasksRepository {
 
 ## LiveData
 
-- Dans `TasksFragment`, ajouter une instance de `TasksRepository` 
-- Modifier votre code en conséquence: dans `onResume()`, "abonnez" le fragment àla réponse du repository et mettez à jour la liste et l'`adapter` avec le résultat (importer le `Observer` de la lib `lifecycle`):
+- Dans `TasksFragment`, ajouter une instance de `TasksRepository` et modifier votre code pour l'utiliser: dans `onResume()`, "abonnez" le fragment à la réponse du repository et mettez à jour la liste et l'`adapter` avec le résultat (importer le `Observer` de la lib `lifecycle`):
 
 
 ```kotlin
