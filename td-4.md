@@ -145,7 +145,7 @@ data class UserInfo(
 ### Affichage
 
 - Dans `fragment_tasks.xml`, ajoutez une `TextView` au dessus de la liste de tâche si vous n'en avez pas
-- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur
+- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur, une erreur va s'afficher mais ne paniquez pas, on la résoud au point suivant:
 
 ```kotlin
 val userInfo = Api.userService.getInfo().body()
@@ -213,7 +213,6 @@ class TasksRepository {
 
     private suspend fun loadTasks(): List<Task>? {
         val tasksResponse = tasksService.getTasks()
-        Log.e("loadTasks", tasksResponse.toString())
         return if (tasksResponse.isSuccessful) tasksResponse.body() else null
     }
 }
@@ -271,31 +270,29 @@ suspend fun updateTask(@Body task: Task): Response<Task>
 
 Mettre toute la logique dans le fragment est une trés mauvaise pratique: les `ViewModel` permettent d'extraire une partie logique du fragment.
 
-Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra la liste des taches, l'adapteur et le Repository, ainsi que les coroutines, supprimer la fonction `getTasks` du `TasksRepository`
+Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra la liste des tâches, l'adapteur et le Repository, ainsi que les coroutines, supprimer la fonction `getTasks` du `TasksRepository`
 
-Vous pourrez la récupérer dans le fragment grâce au `ViewModelProviders`:
+Vous pourrez la récupérer dans le fragment grâce au `ViewModelProvider`, voici un squellette de l'implémentation globale:
 
 ```kotlin
 class TasksFragment: Fragment() {
+  val tasksAdapter = ...
   private val tasksViewModel by lazy {
     ViewModelProvider(this).get(TasksViewModel::class.java)
   }
 
   override fun onCreateView(...) {
-    // ...
     tasksViewModel.tasks.observe(this, Observer { ... })
   }
 
   override fun onResume(...) {
-    // ...
     tasksViewModel.loadTasks()
   }
 }
 
 class TasksViewModel: ViewModel() {
+  private val tasks = MutableLiveData<List<Data>
   private val repository = ...
-  private val tasks = ...
-  val tasksAdapter = ...
   
   fun loadTasks() { 
         viewModelScope { repository.loadTasks() }
