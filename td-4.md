@@ -259,7 +259,7 @@ suspend fun updateTask(@Body task: Task, @Path("id") id: String = task.id): Resp
 
 **Remarque:** Vous pouvez créer des tâches dans l'interface web, en spécifiant votre token avec le bouton "Authorize" en haut
 
-- Inspirez vous du chargement de la liste pour ajouter les methodes permettant la suppression dans `TasksRepository` 
+- Inspirez vous du chargement de la liste pour ajouter les methodes permettant la suppression dans `TasksRepository`: utilisez `MutableLiveData<Boolean>` et retournez directement `isSucessful` cette fois
 - Dans `onDeleteClickListener`utilisez le repository pour supprimer dans le serveur et observez le résultat avant de supprimer dans la liste locale:
 
 ```kotlin
