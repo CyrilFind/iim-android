@@ -258,7 +258,7 @@ suspend fun updateTask(@Body task: Task): Response<Task>
 
 ## Suppression, Ajout et Édition d'une tâche
 
-**Remarque:** Vous pouvez créer des tâches dans l'interface web, en spécifiant votre token dans avec le bouton "Authorize" en haut
+**Remarque:** Vous pouvez créer des tâches dans l'interface web, en spécifiant votre token avec le bouton "Authorize" en haut
 
 - Modifier l'action lorsqu'on clique sur le bouton de suppression et effectuer un call réseau afin de la supprimer dans le serveur puis supprimer la dans la liste locale `tasks`
 
@@ -266,11 +266,12 @@ suspend fun updateTask(@Body task: Task): Response<Task>
 
 ## TasksViewModel
 
-Mettre toute la logique dans le fragment est une trés mauvaise pratique: les `ViewModel` permettent d'extraire une partie logique du fragment.
+Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewModel` permettent d'en extraire une partie.
 
-Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra la liste des tâches, l'adapteur et le Repository, ainsi que les coroutines, supprimer la fonction `getTasks` du `TasksRepository`
+Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra la liste des tâches, le Repository et lancera les coroutines
+Vous pourrez la récupérer dans le fragment grâce au `ViewModelProvider`
 
-Vous pourrez la récupérer dans le fragment grâce au `ViewModelProvider`, voici un squelette de l'implémentation globale:
+- supprimer la fonction `getTasks` du `TasksRepository` et suivez ce squelette de l'implémentation globale:
 
 ```kotlin
 class TasksFragment: Fragment() {
