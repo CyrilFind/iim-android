@@ -7,7 +7,7 @@ Les APIs qui nous allons utiliser exigent qu'une personne soit connectée, dans 
 - Nous allons utiliser ce site: https://android-tasks-api.herokuapp.com/api-docs/index.html
 - Lisez rapidement la documentation de l'API: elle permet d'utiliser ses routes directement
 - Cliquez sur `users/sign_up` puis sur "Try it out"
-- Vous devriez voir un JSON prérempli dont vous pouvez remplacer les données avant de cliquer sur "Execute":
+- Vous devriez voir un JSON prérempli dont vous devez remplir les données (vous pouvez mettre des infos bidon) avant de cliquer sur "Execute":
 
 ```json
 {
@@ -41,6 +41,7 @@ Dans le fichier `app/build.gradle`, ajouter :
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
   implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"
+  implementation "org.jetbrains.kotlin:kotlin-reflect:1.1.0"
 ```
 
 ## Retrofit
