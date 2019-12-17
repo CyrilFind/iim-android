@@ -149,7 +149,8 @@ data class UserInfo(
 - Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur, une erreur va s'afficher mais ne paniquez pas, on va s'en occuper:
 
 ```kotlin
-val userInfo = Api.userService.getInfo().body()
+// Ici on ne va pas gérer les cas d'erreur donc on force le crash avec "!!"
+val userInfo = Api.userService.getInfo().body()!! 
 ```
 
 - La méthode `getInfo()` étant déclarée comme `suspend`, vous aurez besoin de la lancer dans un `couroutineScope`.
@@ -173,7 +174,7 @@ coroutineScope.cancel()
 - Lancez l'app et vérifiez que vos infos s'affichent ! 
 
 #### Remarques:
-- Si vous utilisez `lifeCycleScope` (en ayant ajouté `implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"`) vous n'avaez pas besoin de faire la création et la suppression
+- En réalité, vous n'avez pas besoin de faire la création et la suppression, si vous utiliser directement `lifeCycleScope`
 -  Un autre scope est fourni par android: `viewModelScope`, mais pour l'instant on implémente tout dans les fragments comme des 🐷
 
 ## TasksFragment
@@ -245,7 +246,7 @@ Modifier `TasksService` et ajoutez y les routes suivantes:
 
 ```kotlin
 @DELETE("tasks/{id}")
-suspend fun deleteTask(@Path("id") id: String): Response<Boolean>
+suspend fun deleteTask(@Path("id") id: String): Response<String>
 
 @POST("tasks")
 suspend fun createTask(@Body task: Task): Response<Task>
@@ -278,7 +279,9 @@ Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewMod
 Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra la liste des tâches, le Repository et lancera les coroutines
 Vous pourrez la récupérer dans le fragment grâce au `ViewModelProvider`
 
-- supprimer la fonction `getTasks` du `TasksRepository` et suivez ce squelette de l'implémentation globale:
+- Dans `TasksFragment`, supprimer le `repository` et la list de `tasks`
+- Dans `TasksRepository`, supprimer la fonction `getTasks` 
+- Inspirez vous de ce squelette pour refactoriser votre app:
 
 ```kotlin
 // Repository simplifié, avec seulement des méthodes "suspend"
