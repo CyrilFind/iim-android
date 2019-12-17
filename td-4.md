@@ -222,7 +222,6 @@ class TasksRepository {
 ## LiveData
 
 - Dans `TasksFragment`, ajouter une instance de `TasksRepository` 
-- Dans `Api`, passer `taskService` et `userService` en `private`
 - Modifier votre code en conséquence: dans `onResume()`, "abonnez" le fragment àla réponse du repository et mettez à jour la liste et l'`adapter` avec le résultat (importer le `Observer` de la lib `lifecycle`):
 
 
