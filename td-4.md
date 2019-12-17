@@ -196,12 +196,13 @@ interface TasksService {
 Le Repository va chercher des data dans une ou plusieurs sources de données (ex: DB locale et API distante)
 
 Créer la classe `TasksRepository`avec:
+
 - une méthode publique `getTasks` qui renvoie des LiveData (auquel va s'abonner le fragment)
 - une méthode privée `loadTasks` qui récupère la liste en asynchrone
 
 ```kotlin
 class TasksRepository {
-    private val tasksService = TaskApi.tasksService
+    private val tasksService = Api.tasksService
 	private val coroutineScope = MainScope()
 
     fun getTasks(): LiveData<List<Task>?> {
@@ -221,13 +222,11 @@ class TasksRepository {
 ## LiveData
 
 - Dans `TasksFragment`, ajouter une instance de `TasksRepository` 
-- Modifier l'adapteur pour qu'il utilise une liste locale au fragment et plus la liste `static` du faux ViewModel
-- Modifier également la fonction deleteTask pour que votre code compile
+- Modifier votre code pour l'utiliser
 
 ```kotlin
 private val tasksRepository = TasksRepository()
 private val tasks = mutableListOf<Task>()
-private val tasksAdapter= TasksAdapter(tasks,....)
 ```
 
 Dans `onCreate`, "abonnez" le fragment aux modifications des tâches et mettez à jour la liste et l'`adapter` avec le résultat:
