@@ -23,7 +23,7 @@ Les APIs qui nous allons utiliser exigent qu'une personne soit connectée, dans 
 
 ## Accèder à l'internet
 
-Afin de communiquer avec le réseau internet (wifi, ethernet ou mobile), il faut ajouter la permission dans le fichier `AndroidManifest`, à l'intérieur de la balise `<manifest...>`
+Afin de communiquer avec le réseau internet (wifi, ethernet ou mobile), il faut ajouter la permission dans le fichier `AndroidManifest`, juste après la balise `<manifest...>`
 
 ```xml
 <uses-permission android:name="android.permission.INTERNET" />
