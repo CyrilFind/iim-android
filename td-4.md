@@ -323,7 +323,7 @@ class TasksFragment: Fragment() {
 
 // L'adapter se notifie tout seul automatiquement à chaque fois qu'on modifie sa liste:
 class TaskAdapter() : ... {
- internal var list: List<MovieView> by Delegates.observable(emptyList()) {
+ internal var list: List<Task> by Delegates.observable(emptyList()) {
         _, _, _ -> notifyDataSetChanged()
     }
 }
