@@ -43,12 +43,7 @@ Dans le fichier `app/build.gradle`, ajouter :
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
 ```
 
-
-## HeaderFragment
-
-Dans un premier temps vous allez afficher votre nom d'utilisateur dans le `HeaderFragment`
-
-### Retrofit
+## Retrofit
 
 - Vous pouvez créer un package `network` qui contiendra les classes en rapport avec les échanges réseaux
 - Créer un `object` `Api` (ses membres et méthodes seront donc `static`)
@@ -61,7 +56,7 @@ object Api {
 }
 ```
 
-- Créer une instance de moshi pour parser le JSON renvoyé par le serveur:
+- Créer une instance de [Moshi](https://github.com/square/moshi) pour parser le JSON renvoyé par le serveur:
 
 ```kotlin
 object Api {
@@ -101,7 +96,7 @@ object Api {
 }
 ```
 
-#### Ajout du UserService
+### UserService
 
 - Créez l'interface `UserService` pour requêter les infos de l'utilisateur:
 
@@ -122,7 +117,7 @@ object Api {
 
 ```
 
-#### Moshi - UserInfo
+### UserInfo
 
 Exemple de json renvoyé par la route `/info`:
 
@@ -147,18 +142,20 @@ data class UserInfo(
 )
 ```
 
-#### Retour au fragment
+### Affichage
 
-- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur et l'afficher dans le header:
+- Ajoutez une `TextView` au dessus de la liste de tâche si vous n'en avez pas
+- Overrider la méthode `onResume` pour y récuperer les infos de l'utilisateur et les afficher dans votre `TextView`
 
 ```kotlin
-Api.userService.getInfo()
+val userInfo = Api.userService.getInfo()
 ```
 
-La méthode getInfo étant déclarée comme `suspend`, vous aurez besoin de la lancer dans une dans un `couroutineScope`
-Pour cela on peut utiliser `GlobalScope`, mais une meilleure façon est d'en créer un "vrai":
+- La méthode `getInfo()` étant déclarée comme `suspend`, vous aurez besoin de la lancer dans un `couroutineScope`.
+Pour cela on peut utiliser `GlobalScope`, mais une meilleure façon est d'en créer un "vrai" pour pouvoir le `cancel()` après:
 
 ```kotlin
+// Pour créer:
 private val coroutineScope = MainScope()
 // Pour utiliser:
 coroutineScope.launch {...}
@@ -166,7 +163,7 @@ coroutineScope.launch {...}
 coroutineScope.cancel()
 ```
 
-**NB:** Une vraiment bonne façon est d'utiliser les scopes fournis par android, notamment: `viewModelScope`, mais pour l'instant on implémente tout dans le fragment comme des 🐷
+**NB:** Une vraiment bonne façon est d'utiliser les scopes fournis par android, notamment: `viewModelScope`, mais pour l'instant on implémente tout dans les fragments comme des 🐷
 
 ## TasksFragment
 
@@ -185,7 +182,7 @@ interface TasksService {
 
 - Modifier `Task` pour la rendre Moshi-compatible
 
-### TasksRepository
+## TasksRepository
 
 Le Repository va chercher des data dans une ou plusieurs sources de données (ex: DB locale et API distante)
 
@@ -212,7 +209,7 @@ class TasksRepository {
 }
 ```
 
-### S'abonner au LiveData
+## LiveData
 
 - Dans `TasksFragment`, ajouter une instance de `TasksRepository` 
 - Modifier l'adapteur pour qu'il utilise une liste locale au fragment et plus la liste `static` du faux ViewModel
@@ -262,7 +259,7 @@ suspend fun updateTask(@Body task: Task): Response<Task>
 
 - Avant de fermer l'Activity qui permet de créer/editer des tâches, effectuer un call réseau et vérifier qu'il n'y a pas d'erreurs avant de la fermer et de réafficher l'écran des tâches
 
-# TasksViewModel
+## TasksViewModel
 
 Mettre toute la logique dans le fragment est une trés mauvaise pratique: les `ViewModel` permettent d'extraire une partie logique du fragment.
 
@@ -271,13 +268,6 @@ Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra l
 Vous pourrez la récupérer dans le fragment grâce au `ViewModelProviders`:
 
 ```kotlin
-class TasksViewModel: ViewModel() {
-  private val repository
-  private val tasks
-  val tasksAdapter
-  fun loadTasks() { ... }
-}
-
 class TasksFragment: Fragment() {
   private val tasksViewModel by lazy {
     ViewModelProviders.of(this).get(TasksViewModel::class.java)
@@ -294,6 +284,17 @@ class TasksFragment: Fragment() {
   }
 }
 
+class TasksViewModel: ViewModel() {
+  private val repository
+  private val tasks
+  val tasksAdapter
+  fun loadTasks() { 
+        viewModelScope {
+            repository.loadTasks()
+        }
+    }
+}
+
 class TasksRepository {
   private val tasksService = TaskApi.tasksService
   
@@ -304,7 +305,6 @@ class TasksRepository {
   
   suspend fun loadTasks(): List<Task>? {
     val tasksResponse = tasksService.getTasks()
-  
     return if (tasksResponse.isSuccessful) tasksResponse.body() else null
   }
 }

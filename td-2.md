@@ -120,7 +120,7 @@ private val tasks = listOf(
 
 ```kotlin
 // Instanciation d'un objet task avec des données préremplies:
-Task(id = "id_#${tasks.size + 1}", title = "task #${tasks.size + 1}")
+Task(id = "id_${tasks.size + 1}", title = "Task ${tasks.size + 1}")
 ```
 
 - Dans cette callback, **notifier l'adapteur** (aidez vous des suggestions de l'IDE) pour que votre modification s'affiche
