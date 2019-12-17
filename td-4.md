@@ -281,30 +281,7 @@ Vous pourrez la récupérer dans le fragment grâce au `ViewModelProvider`
 - supprimer la fonction `getTasks` du `TasksRepository` et suivez ce squelette de l'implémentation globale:
 
 ```kotlin
-class TasksFragment: Fragment() {
-  val tasksAdapter = ...
-  private val tasksViewModel by lazy {
-    ViewModelProvider(this).get(TasksViewModel::class.java)
-  }
-
-  override fun onCreateView(...) {
-    tasksViewModel.tasks.observe(this, Observer { ... })
-  }
-
-  override fun onResume(...) {
-    tasksViewModel.loadTasks()
-  }
-}
-
-class TasksViewModel: ViewModel() {
-  private val tasks = MutableLiveData<List<Data>
-  private val repository = ...
-  
-  fun loadTasks() { 
-        viewModelScope { repository.loadTasks() }
-    }
-}
-
+// Repository simplifié, avec seulement des méthodes "suspend"
 class TasksRepository {
   private val tasksService = Api.tasksService
     
@@ -313,6 +290,45 @@ class TasksRepository {
     return if (tasksResponse.isSuccessful) tasksResponse.body() else null
   }
 }
+
+// Le ViewModel met à jour la liste de task qui est une LiveData 
+class TasksViewModel: ViewModel() {
+  private val tasks = MutableLiveData<List<Task>>?>()
+  private val repository = ...
+  
+  fun loadTasks() { 
+        viewModelScope.launch { 
+            tasks.postValue(repository.loadTasks())
+        }
+    }
+}
+
+// Le Fragment observe la LiveData et met à jour la liste de l'adapter:
+class TasksFragment: Fragment() {
+  val tasksAdapter = ...
+  private val tasksViewModel by lazy {
+    ViewModelProvider(this).get(TasksViewModel::class.java)
+  }
+
+  override fun onCreateView(...) {
+    tasksViewModel.tasks.observe(this, Observer { newList -> 
+        adapter.list = newList
+    })
+  }
+
+  override fun onResume(...) {
+    tasksViewModel.loadTasks()
+  }
+}
+
+// L'adapter se notifie tout seul automatiquement à chaque fois qu'on modifie sa liste:
+class TaskAdapter() : ... {
+ internal var list: List<MovieView> by Delegates.observable(emptyList()) {
+        _, _, _ -> notifyDataSetChanged()
+    }
+}
+
+
 ```
 
 - Vérifier que tout fonctionne
