@@ -38,7 +38,7 @@ Dans le fichier `app/build.gradle`, ajouter :
   implementation 'com.squareup.retrofit2:converter-moshi:2.6.2'
   implementation "com.squareup.moshi:moshi:1.8.0"
   implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
-  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
+  implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
   implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"
   implementation "org.jetbrains.kotlin:kotlin-reflect:1.1.0"
@@ -264,75 +264,10 @@ suspend fun updateTask(@Body task: Task, @Path("id") id: String = task.id): Resp
 
 ```kotlin
 adapter.onDeleteClickListener = { task ->
-    tasksRepository.deleteTasks().observe(this, Observer { success -> 
+    tasksRepository.deleteTask(...).observe(this, Observer { success -> 
         if (success) {
             // faire comme avant
         }
     })
 }
 ```
-
-## TasksViewModel
-
-Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewModel` permettent d'en extraire une partie.
-
-Créer une classe `TasksViewModel` qui hérite de `ViewModel`: elle contiendra la liste des tâches, le Repository et lancera les coroutines
-Vous pourrez la récupérer dans le fragment grâce au `ViewModelProvider`
-
-- Dans `TasksFragment`, supprimer le `repository` et la list de `tasks`
-- Dans `TasksRepository`, supprimer la fonction `getTasks` 
-- Inspirez vous de ce squelette pour refactoriser votre app:
-
-```kotlin
-// Repository simplifié, avec seulement des méthodes "suspend"
-class TasksRepository {
-  private val tasksService = Api.tasksService
-    
-  suspend fun loadTasks(): List<Task>? {
-    val tasksResponse = tasksService.getTasks()
-    return if (tasksResponse.isSuccessful) tasksResponse.body() else null
-  }
-}
-
-// Le ViewModel met à jour la liste de task qui est une LiveData 
-class TasksViewModel: ViewModel() {
-  private val tasks = MutableLiveData<List<Task>>?>()
-  private val repository = ...
-  
-  fun loadTasks() { 
-        viewModelScope.launch { 
-            tasks.postValue(repository.loadTasks())
-        }
-    }
-}
-
-// Le Fragment observe la LiveData et met à jour la liste de l'adapter:
-class TasksFragment: Fragment() {
-  val tasksAdapter = ...
-  private val tasksViewModel by lazy {
-    ViewModelProvider(this).get(TasksViewModel::class.java)
-  }
-
-  override fun onCreateView(...) {
-    tasksViewModel.tasks.observe(this, Observer { newList -> 
-        adapter.list = newList
-    })
-  }
-
-  override fun onResume(...) {
-    tasksViewModel.loadTasks()
-  }
-}
-
-// L'adapter se notifie tout seul automatiquement à chaque fois qu'on modifie sa liste:
-class TaskAdapter() : ... {
- internal var list: List<Task> by Delegates.observable(emptyList()) {
-        _, _, _ -> notifyDataSetChanged()
-    }
-}
-
-
-```
-
-- Vérifier que tout fonctionne
-- Permettre l'ajout et l'édition des tasks du serveur
