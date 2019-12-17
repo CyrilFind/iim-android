@@ -262,7 +262,7 @@ suspend fun updateTask(@Body task: Task): Response<Task>
 
 **Remarque:** Vous pouvez créer des tâches dans l'interface web, en spécifiant votre token dans avec le bouton "Authorize" en haut
 
-- Modifier l'action lorsqu'on clique sur le bouton "supprimer" et effectuer un call réseau afin de la supprimer dans le serveur puis supprimer la dans la liste locale `tasks`
+- Modifier l'action lorsqu'on clique sur le bouton de suppression et effectuer un call réseau afin de la supprimer dans le serveur puis supprimer la dans la liste locale `tasks`
 
 - Avant de fermer l'Activity qui permet de créer/editer des tâches, effectuer un call réseau et vérifier qu'il n'y a pas d'erreurs avant de la fermer et de réafficher l'écran des tâches
 
