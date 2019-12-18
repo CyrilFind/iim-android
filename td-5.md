@@ -16,6 +16,7 @@ Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewMod
     - La liste des `tasks` sous forme de `LiveData`
     - Le `repository`
     - Les coroutines avec `viewModelScope`
+
 - Dans `TaskAdapter`
     - Rendez la liste de `tasks` publique
     - Donnez lui une valeur par défaut: `emptyList()`
@@ -23,7 +24,8 @@ Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewMod
 - Dans `TasksFragment`:
     - Récupérer le `viewModel` grâce à `ViewModelProvider`
     - Supprimer le `repository` et la list de `tasks`
-    - Observer la valeur de `viewModel.tasks` et mettre à jour la liste de l'`adapter`
+    - Observer la valeur de `viewModel.taskListLiveData` et mettre à jour la liste de l'`adapter`
+
 - Dans `TasksRepository`, 
     - Supprimer les fonctions qui utilisent `coroutineScope`
     - Garder seulement celles qui sont `suspend` et retirer `private`
@@ -70,6 +72,7 @@ class TasksFragment: Fragment() {
   override fun onViewCreated(...) {
     viewModel.taskListLiveData.observe(this, Observer { newList -> 
         adapter.list = newList.orEmpty()
+        adapter.notifyDataSetChanged()
     })
   }
 
