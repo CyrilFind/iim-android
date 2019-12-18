@@ -62,7 +62,7 @@ class TasksFragment: Fragment() {
 
   override fun onViewCreated(...) {
     viewModel.tasks.observe(this, Observer { newList -> 
-        adapter.list = newList
+        adapter.list = newList.orEmpty()
     })
   }
 
