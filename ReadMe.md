@@ -16,21 +16,28 @@
 - TD 2: RecyclerView
 - TD 3: Actions & Intents
 - TD 4: Internet
-- ...
+- TD 5: Architecture Components
+- TD 6: Images & Permissions
 
 ## Évaluation
 
 L'évaluation se fera sur un rendu de projet par groupe de 2 sous la forme d'une vidéo d'environ 1 minute (facile à faire dans l'émulateur) montrant le fonctionnement de votre app ainsi qu'un lien vers votre projet github (ou un zip)
 
-Délai: une semaine après la fin du cours
-
-Fonctionnalités demandées: Celles des TD + qq petites en autonomie à définir
-
-Comme il faut 2 notes, je ferai peut être une évaluation écrite individuelle le dernier jour 
+Délai: avant le 4 Janvier au soir
 
 ### Barême indicatif
+Note "participation/avancement" en TD:
+- L'app se lance et affiche une liste de tâches / 5
+- Intéraction avec le serveur:  
+    - Lister / 2
+    - Supprimer / 2
+    - Ajout simple / 2
+    - Éditer / 2
+- Architecture MVVM (TD-5) / 5
 
-- L'app compile et affiche une liste de tâches / 5
-- Toutes les fonctionnalités des TD / 10
-- Fonctionnalités en autonomie / 5
-- Bonus pour toute fonctionnalité en plus, pour la propreté et pour l'architecture
+**Bonus** + 2 pour chaque:
+    - Ajout Complet
+    - Édition
+    - Propreté
+
+Note "autonomie": TD-6 /20
