@@ -70,7 +70,7 @@ class TasksFragment: Fragment() {
 
 // L'adapter se notifie automatiquement à chaque fois qu'on modifie sa liste:
 class TaskAdapter() : ... {
-    var tasksList: MutableList<Task>
+    var list: MutableList<Task>
     internal var list: List<Task> by Delegates.observable(emptyList()) {
         _, _, _ -> notifyDataSetChanged()
     }
