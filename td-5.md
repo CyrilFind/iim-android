@@ -12,6 +12,8 @@ implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
 
 Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewModel` permettent d'en extraire une partie.
 
+Lisez bien tout le sujet et aidez vous du code:
+
 - Créer une classe `TasksViewModel` qui hérite de `ViewModel` qui va gérer:  
     - La liste des `tasks` sous forme de `LiveData`
     - Le `repository`
@@ -35,12 +37,16 @@ Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewMod
 ```kotlin
 // Repository simplifié, avec seulement des méthodes "suspend"
 class TasksRepository {
-  private val service = Api.tasksService
+    private val service = Api.tasksService
     
-  suspend fun loadTasks(): List<Task>? {
-    val response = service.getTasks()
-    return if (response.isSuccessful) response.body() else null
-  }
+    suspend fun loadTasks(): List<Task>? {
+        val response = service.getTasks()
+        return if (response.isSuccessful) response.body() else null
+    }
+    
+    suspend fun removeTask(task: Task) {...}
+    suspend fun createTask(task: Task) {...}
+    suspend fun updateTask(task: Task) {...}
 }
 
 // Le ViewModel met à jour la liste de task qui est une LiveData 
@@ -57,7 +63,16 @@ class TasksViewModel: ViewModel() {
     
     fun deleteTask(task: Task) {...} 
     fun addTask(task: Task) {...} 
-    fun editTask(task: Task) {...} 
+    
+    fun editTask(task: Task) {
+        val newTask = repository.updateTask(task)
+        if (newTask != null) {
+            val newList = taskListLiveData.value.orEmpty().toMutableList()
+            val position = newList.indexOfFirst { it.id == newTask.id }
+            newList[position] = task
+            taskListLiveData.postValue(taskList)
+        }
+    } 
 }
 
 // Le Fragment observe la LiveData et met à jour la liste de l'adapter:
@@ -89,7 +104,7 @@ class TaskAdapter() : ... {
 ```
 
 - Vérifier que ça fonctionne
-- Pour être sur de ne jamais oublier de notifier l'`adapter`, vous pouvez retirer la ligne du fragment et faire ça:
+- Pour être sur de ne jamais oublier de notifier l'`adapter`, vous pouvez retirer la ligne du fragment et utiliser une propriété observable:
 
 ```kotlin
 // L'adapter se notifie automatiquement lui même à chaque fois qu'on modifie sa liste:
