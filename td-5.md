@@ -43,25 +43,32 @@ class TasksRepository {
 
 // Le ViewModel met à jour la liste de task qui est une LiveData 
 class TasksViewModel: ViewModel() {
-  private val tasks = MutableLiveData<List<Task>?>()
+  private val taskListLiveData = MutableLiveData<List<Task>?>()
   private val repository = Api.tasksRepository
   
-  fun loadTasks() { 
+    fun loadTasks() { 
         viewModelScope.launch { 
-            tasks.postValue(repository.loadTasks())
+            val taskList = repository.loadTasks()
+            taskListLiveData.postValue(taskList)
         }
     }
+    
+    fun deleteTask(task: Task) {...} 
+    fun addTask(task: Task) {...} 
+    fun editTask(task: Task) {...} 
 }
 
 // Le Fragment observe la LiveData et met à jour la liste de l'adapter:
 class TasksFragment: Fragment() {
-  val tasksAdapter = TaskApdapter()
+  val tasksAdapter = TaskAdapter()
+  // On récupère une instance de ViewModel
   private val viewModel by lazy {
     ViewModelProvider(this).get(TasksViewModel::class.java)
   }
 
+  // On "abonne" le Fragment aux modifications de l'objet LiveData du ViewModel
   override fun onViewCreated(...) {
-    viewModel.tasks.observe(this, Observer { newList -> 
+    viewModel.taskListLiveData.observe(this, Observer { newList -> 
         adapter.list = newList.orEmpty()
     })
   }
@@ -71,14 +78,20 @@ class TasksFragment: Fragment() {
   }
 }
 
-// L'adapter se notifie automatiquement à chaque fois qu'on modifie sa liste:
+// On donne une valeur par défaut à la liste et on peut la retirer du constructeur:
 class TaskAdapter() : ... {
-    var list: List<Task> by Delegates.observable(emptyList()) {
-        _, _, _ -> notifyDataSetChanged()
-    }
+    var list: List<Task> = emptyList()
 }
 
 ```
 
 - Vérifier que ça fonctionne
+- Pour être sur de ne jamais oublier de notifier l'`adapter`, vous pouvez retirer la ligne du fragment et faire ça:
+
+```kotlin
+// L'adapter se notifie automatiquement lui même à chaque fois qu'on modifie sa liste:
+var list: List<Task> by Delegates.observable(emptyList()) {
+    _, _, _ -> notifyDataSetChanged()
+}
+```
 - Permettre la suppression, l'ajout et l'édition des tasks du serveur avec cette archi
