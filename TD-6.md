@@ -70,7 +70,7 @@ private fun askCameraPermissionAndOpenCamera() {
 
 private fun showDialogBeforeRequest() {
     // Affiche une popup (Dialog) d'explications: 
-    with(AlertDialog.Builder(requireContext())) {
+    with(AlertDialog.Builder(this) {
         setMessage("On a besoin de la caméra sivouplé ! 🥺")
         setPositiveButton(android.R.string.ok) { _, _ -> requestCameraPermission() }
         setCancelable(true)
