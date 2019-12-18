@@ -163,7 +163,7 @@ suspend fun updateAvatar(@Part avatar: MultipartBody.Part): Response<UserInfo>
 ```
 
 - Dans `handlePhotoTaken`, appelez cette fonction pour mettre à jour le serveur avec le nouvel avatar
-- Modifier la `data class UserInfo` pour ajouter un champ `avatar` renvoyé depuis le serveur
+- Modifier la `data class UserInfo` pour ajouter un champ `avatar: String` qui est une URL renvoyée depuis le serveur
 - Enfin au chargement de l'activité, afficher l'avatar renvoyé depuis le serveur
 
 
