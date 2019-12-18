@@ -57,8 +57,8 @@ class TasksFragment: Fragment() {
     ViewModelProvider(this).get(TasksViewModel::class.java)
   }
 
-  override fun onCreateView(...) {
-    tasksViewModel.tasks.observe(this, Observer { newList -> 
+  override fun onViewCreated(...) {
+    viewModel.tasks.observe(this, Observer { newList -> 
         adapter.list = newList
     })
   }
