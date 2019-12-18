@@ -40,7 +40,7 @@ Dans le fichier `app/build.gradle`, ajouter :
   implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
-  implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc-03"
+  implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03"
   implementation "org.jetbrains.kotlin:kotlin-reflect:1.1.0"
 ```
 
