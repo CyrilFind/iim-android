@@ -16,6 +16,9 @@ Mettre toute la logique dans le fragment est une mauvaise pratique: les `ViewMod
     - La liste des `tasks` sous forme de `LiveData`
     - Le `repository`
     - Les coroutines avec `viewModelScope`
+- Dans `TaskAdapter`
+    - Rendez la liste de `tasks` publique
+    - Donnez lui une valeur par défaut: `emptyList()`
 
 - Dans `TasksFragment`:
     - Récupérer le `viewModel` grâce à `ViewModelProvider`
@@ -78,4 +81,4 @@ class TaskAdapter() : ... {
 ```
 
 - Vérifier que ça fonctionne
-- Permettre la suppression, l'ajout et l'édition des tasks du serveur avec cette archi.
+- Permettre la suppression, l'ajout et l'édition des tasks du serveur avec cette archi
