@@ -155,7 +155,6 @@ private fun imageToBody(image: Bitmap?): MultipartBody.Part? {
 }
 ```
 
-- Ajouter une imageView dans la `UserInfoActivity`
 - Dans la fonction `handlePhotoTaken`, afficher la photo à l'aide de Glide
 
 ## Uploader l'image capturée
