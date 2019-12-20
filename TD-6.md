@@ -183,5 +183,5 @@ suspend fun updateAvatar(@Part avatar: MultipartBody.Part): Response<UserInfo>
 
 ```kotlin
 @PATCH("users")
-suspend fun updateAvatar(@Body user: UserInfo): Response<UserInfo>
+suspend fun update(@Body user: UserInfo): Response<UserInfo>
 ```
