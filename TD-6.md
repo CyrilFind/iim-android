@@ -97,7 +97,7 @@ companion object {
 Si l'utilisateur à donné accès à la camera, utilisez `openCamera()`:
 
 ```kotlin 
-if (requestCode == PackageManager.PERMISSION_GRANTED && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED)
+if (requestCode == CAMERA_PERMISSION_CODE && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED)
 ```
 Sinon, affichez un Toast:
 
