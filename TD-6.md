@@ -169,12 +169,25 @@ suspend fun updateAvatar(@Part avatar: MultipartBody.Part): Response<UserInfo>
 
 - Dans `handlePhotoTaken`, appelez cette fonction pour mettre à jour le serveur avec le nouvel avatar
 - Modifier la `data class UserInfo` pour ajouter un champ `avatar: String` qui est une URL renvoyée depuis le serveur
-- Enfin au chargement de l'activité, afficher l'avatar renvoyé depuis le serveur
+- Enfin au chargement de l'activité, afficher l'avatar renvoyé depuis le serveur:
 
+```kotlin
+    val glide = Glide.with(this)
+    lifecycleScope.launch {
+        val userInfo = ...getInfos()
+        glide.load(userInfo.avatar)...into(...)
+    }
+```
 
 ## Uploader une image stockée
 - Ajouter dans le manifest la permission `android.permission.READ_EXTERNAL_STORAGE`
 - Permettez à l'utilisateur d'uploader une image qu'il avait déjà sur son téléphone
+
+```kotlin
+val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+galleryIntent.type = "image/*"
+startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+```
 
 ## Édition infos utilisateurs
 - Comme pour tasks, refactorisez en utilisant un `UserInfoViewModel` et un `UserInfoRepository`
