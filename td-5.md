@@ -62,12 +62,14 @@ class TasksViewModel: ViewModel() {
     }
     
     fun editTask(task: Task) {
-        val newTask = repository.updateTask(task)
-        if (newTask != null) {
-            val newList = taskListLiveData.value.orEmpty().toMutableList()
-            val position = newList.indexOfFirst { it.id == newTask.id }
-            newList[position] = task
-            taskListLiveData.postValue(newList)
+    viewModelScope.launch { 
+            val newTask = repository.updateTask(task)
+            if (newTask != null) {
+                val newList = taskListLiveData.value.orEmpty().toMutableList()
+                val position = newList.indexOfFirst { it.id == newTask.id }
+                newList[position] = task
+                taskListLiveData.postValue(newList)
+            }
         }
     } 
     
