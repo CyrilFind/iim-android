@@ -43,8 +43,8 @@ Glide.with(this).load("https://goo.gl/gEgYUd").into(image_view)
         android:layout_height="wrap_content"
         android:text="Prendre une photo" />
 </LinearLayout>
-
 ```
+- Lancer cette appli quand on clique sur l'`ImageView` que vous venez de remplir avec `Glide`
 
 ## Demander la Permission
 
