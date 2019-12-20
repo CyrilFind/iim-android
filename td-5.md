@@ -51,7 +51,7 @@ class TasksRepository {
 
 // Le ViewModel met à jour la liste de task qui est une LiveData 
 class TasksViewModel: ViewModel() {
-  private val taskListLiveData = MutableLiveData<List<Task>?>()
+  val taskListLiveData = MutableLiveData<List<Task>?>()
   private val repository = Api.tasksRepository
   
     fun loadTasks() { 
@@ -60,9 +60,6 @@ class TasksViewModel: ViewModel() {
             taskListLiveData.postValue(taskList)
         }
     }
-    
-    fun deleteTask(task: Task) {...} 
-    fun addTask(task: Task) {...} 
     
     fun editTask(task: Task) {
         val newTask = repository.updateTask(task)
@@ -73,6 +70,9 @@ class TasksViewModel: ViewModel() {
             taskListLiveData.postValue(newList)
         }
     } 
+    
+    fun deleteTask(task: Task) {...} 
+    fun addTask(task: Task) {...} 
 }
 
 // Le Fragment observe la LiveData et met à jour la liste de l'adapter:
