@@ -93,7 +93,13 @@ companion object {
 ```
 
 - Prenez le temps de lire et comprendre ce pavé 🤔
-- Overrider la méthode `onRequestPermissionsResult`, si l'utilisateur à donné accès à la camera `PackageManager.PERMISSION_GRANTED`, utilisez `openCamera()`, si il refuse vous affichez un Toast:
+- Overrider la méthode `onRequestPermissionsResult`:
+Si l'utilisateur à donné accès à la camera, utilisez `openCamera()`:
+
+```kotlin 
+if (requestCode == PackageManager.PERMISSION_GRANTED && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED)
+```
+Sinon, affichez un Toast:
 
 ```kotlin
 Toast.makeText(this, "Si vous refusez, on peux pas prendre de photo ! 😢", Toast.LENGTH_LONG).show()
