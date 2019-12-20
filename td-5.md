@@ -110,8 +110,8 @@ class TaskAdapter() : ... {
 
 ```kotlin
 // L'adapter se notifie automatiquement lui même à chaque fois qu'on modifie sa liste:
-var list: List<Task> by Delegates.observable(emptyList()) {
-    _, _, _ -> notifyDataSetChanged()
+var list: List<Task> by Delegates.observable(emptyList()) {_, _, _ ->
+    notifyDataSetChanged()
 }
 ```
 - Permettre la suppression, l'ajout et l'édition des tasks du serveur avec cette archi

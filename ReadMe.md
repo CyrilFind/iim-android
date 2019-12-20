@@ -41,7 +41,6 @@ Délai: avant le 4 Janvier au soir
 
     - Features en plus: / + 2 pour chaque
         - Ajout Complet
-        - Éditer
         - Édition
         - Propreté
 
