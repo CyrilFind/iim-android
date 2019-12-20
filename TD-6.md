@@ -184,9 +184,13 @@ suspend fun updateAvatar(@Part avatar: MultipartBody.Part): Response<UserInfo>
 - Permettez à l'utilisateur d'uploader une image qu'il avait déjà sur son téléphone
 
 ```kotlin
-val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+// Pour ouvrir la gallerie:
+val galleryIntent = Intent(Intent.ACTION_PICK)
 galleryIntent.type = "image/*"
 startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
+
+// Pour récupérer le bitmap dans onActivityResult
+val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data?.data)
 ```
 
 ## Édition infos utilisateurs

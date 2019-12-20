@@ -22,12 +22,21 @@
 
 ## Évaluation
 
-L'évaluation se fera sur un rendu de projet par groupe de 2 sous la forme d'une vidéo d'environ 1 minute (facile à faire dans l'émulateur) montrant le fonctionnement de votre app ainsi qu'un lien vers votre projet github (ou un zip)
+L'évaluation se fera sur un rendu de projet par groupe de 2 sous la forme suivante:
+- Une vidéo d'environ 1 minute démontrant le fonctionnement de votre app 
+- Un lien vers votre projet git
 
-Cherchez le bouton vert dans le volet "Logcat"
+### La vidéo:
+
+Cherchez le bouton vert dans le volet "Logcat" pour enregistrer
 ![Capturer une vidéo](video.png)
 
-Délai: avant le 4 Janvier au soir
+- Il faut montrer toutes les features que vous avez implémentées (lister, ajouter, supprimer, etc...)
+- Il faut que vous fassiez une rotation d'écran après avoir fait des actions sur votre liste
+- Il faut qu'on voie un signe distinctif dans votre app pour ne veux pas avoir que des apps identiques: affichez au moins un nom quelquepart (celui récupéré du serveur par ex c'est parfait), votre avatar si vous l'avez fait ou alors personalisez un peu le design.
+
+### Délai
+Avant le 4 Janvier minuit
 
 ### Barême indicatif
 
@@ -44,4 +53,19 @@ Délai: avant le 4 Janvier au soir
         - Édition
         - Propreté
 
-- Note "autonomie": Avancer sur TD-6 et/ou TD-7 (barême à définir)
+- Note "autonomie": 
+    - TD-6 / 20
+    - TD-7 / 20
+    - Bonus +2: Rafraichir la liste avec un `SwipeRefreshLayout`
+    - Bonus +2: Ajouter un `PreferenceScreen` pour changer la couleur d'affichage par ex
+
+L'idée de la note d'autonomie est que vous aurez une bonne note si vous finissez au moins un des deux TDs ou si vous faites une bonne moitié de chaque.
+
+
+### Liens
+
+- Discord pour poser des questions: [https://discord.gg/9A72u3](https://discord.gg/9A72u3)
+
+- Évaluation et retours:
+    - Groupe du matin: [http://bit.ly/201219-cyril1 ](http://bit.ly/201219-cyril1)
+    - Groupe du soir: [http://bit.ly/201219-cyril2 ](http://bit.ly/201219-cyril2)
