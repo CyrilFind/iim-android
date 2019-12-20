@@ -49,7 +49,7 @@ Glide.with(this).load("https://goo.gl/gEgYUd").into(image_view)
 ## Demander la Permission
 
 - `AndroidManifest`: ajouter la permission `android.permission.CAMERA`
-- `UserInfoActivity` : sur le `take_picture_button`, ajouter un onClickListener qui appele la méthode `askCameraPermissionAndOpenCamera`
+- `UserInfoActivity` : Dans `onCreate()`, ajouter un `onClickListener` à `take_picture_button`qui appele la méthode `askCameraPermissionAndOpenCamera()`
 
 
 ```kotlin
@@ -70,7 +70,7 @@ private fun askCameraPermissionAndOpenCamera() {
 
 private fun showDialogBeforeRequest() {
     // Affiche une popup (Dialog) d'explications: 
-    with(AlertDialog.Builder(this) {
+    AlertDialog.Builder(this).apply {
         setMessage("On a besoin de la caméra sivouplé ! 🥺")
         setPositiveButton(android.R.string.ok) { _, _ -> requestCameraPermission() }
         setCancelable(true)
