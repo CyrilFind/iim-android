@@ -137,7 +137,7 @@ private fun handlePhotoTaken(data: Intent?) {
 
 // Celle ci n'est pas très intéressante à lire
 // En gros, elle lit le fichier et le prépare pour l'envoi HTTP
-private fun imageToBody(image: Bitmap?): MultipartBody.Part? {
+private fun imageToBody(image: Bitmap?): MultipartBody.Part {
   val f = File(cacheDir, "tmpfile.jpg")
   f.createNewFile()
   try {

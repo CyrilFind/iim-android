@@ -67,7 +67,7 @@ class TasksViewModel: ViewModel() {
             if (newTask != null) {
                 val newList = taskListLiveData.value.orEmpty().toMutableList()
                 val position = newList.indexOfFirst { it.id == newTask.id }
-                newList[position] = task
+                newList[position] = newTask
                 taskListLiveData.postValue(newList)
             }
         }
