@@ -52,7 +52,7 @@ class TasksRepository {
 // Le ViewModel met à jour la liste de task qui est une LiveData 
 class TasksViewModel: ViewModel() {
   val taskListLiveData = MutableLiveData<List<Task>?>()
-  private val repository = Api.tasksRepository
+  private val repository = TasksRepository()
   
     fun loadTasks() { 
         viewModelScope.launch { 
