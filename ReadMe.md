@@ -64,7 +64,7 @@ L'idée de la note d'autonomie est que vous aurez une bonne note si vous finisse
 
 ### Liens
 
-- Discord pour poser des questions: [https://discord.gg/9A72u3](https://discord.gg/9A72u3)
+- Discord pour poser des questions: [https://discord.gg/rY6BU8Y](https://discord.gg/rY6BU8Y)
 
 - Évaluation et retours:
     - Groupe du matin: [http://bit.ly/201219-cyril1 ](http://bit.ly/201219-cyril1)
